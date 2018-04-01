@@ -3,7 +3,7 @@
 This repository stores sample collataral for Azure AD B2C for training / testing purposes only.
 
 ## SAMLTEST
-The [SAMLTEST](./SAMLTEST) web application is a DotNetCore2 SAML Identity Provider adn Service Provier. 
+The [SAMLTEST](./SAMLTEST) web application is a DotNetCore2 SAML Identity Provider and Service Provier. 
 
 This applicaiton is designed to be used with Azure AD B2C for testing / training of SAML Policies. 
 
