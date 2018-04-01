@@ -73,12 +73,12 @@ namespace SAMLTEST.SAMLObjects
         /// <summary>
         /// This method constructs a HTML Form for Posting.
         /// </summary>
-        public static string GeneratePost(String SAMLRqXMLB64, String url)
+        public static string GeneratePost(String SAMLRqXMLB64, String url, String Type= "SAMLRequest")
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat(@"<html><body onload='document.forms[""form""].submit()'>");
             sb.AppendFormat("<form name='form' action='{0}' method='post'>", url);
-            sb.AppendFormat("<input type='hidden' name='SAMLRequest' value='{0}'>", SAMLRqXMLB64);
+            sb.AppendFormat("<input type='hidden' name='{1}' value='{0}'>", SAMLRqXMLB64, Type);
             sb.Append("</form></body></html>");
             return sb.ToString();
         }

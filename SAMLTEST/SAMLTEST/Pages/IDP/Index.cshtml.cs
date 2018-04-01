@@ -36,14 +36,16 @@ namespace SAMLTEST.Pages.IDP
         {
 
             string b2cloginurl = _configuration["SAMLTEST:b2cloginurl"];
-             Policy = Policy.StartsWith("B2C_1A_") ? Policy : "B2C_1A_" + Policy;
+            Policy = Policy.StartsWith("B2C_1A_") ? Policy : "B2C_1A_" + Policy;
+            Tenant = Tenant.ToLower().Contains("onmicrosoft.com") ? Tenant : Tenant + ".onmicrosoft.com";
 
-            string ACS = "https://" + b2cloginurl + "/te/" + Tenant + ".onmicrosoft.com/" + Policy + "/samlp/sso/assertionconsumer" ;
+
+            string ACS = "https://" + b2cloginurl + "/te/" + Tenant + "/" + Policy + "/samlp/sso/assertionconsumer" ;
 
             SAMLResponse Resp = new SAMLResponse(ACS, "", SAMLHelper.GetThisURL(this), _configuration);
             string SAMLResponse = Convert.ToBase64String(Encoding.UTF8.GetBytes(Resp.ToString()));
 
-            return Content(SAMLHelper.GeneratePost(SAMLResponse,ACS),"text/html");
+            return Content(SAMLHelper.GeneratePost(SAMLResponse,ACS,"SAMLResponse"),"text/html");
             
 
         }

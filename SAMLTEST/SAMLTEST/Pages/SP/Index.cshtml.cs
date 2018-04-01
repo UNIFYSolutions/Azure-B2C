@@ -37,9 +37,11 @@ namespace SAMLTEST.Pages.SP
 
             string b2cloginurl = _configuration["SAMLTEST:b2cloginurl"];
             Policy = Policy.StartsWith("B2C_1A_") ? Policy : "B2C_1A_" + Policy;
+            Tenant = Tenant.ToLower().Contains("onmicrosoft.com") ? Tenant : Tenant + ".onmicrosoft.com";
+
             AuthnRequest AuthnReq = new AuthnRequest("https://" + b2cloginurl + "/te/" + Tenant + ".onmicrosoft.com/" + Policy + "/samlp/sso/login",SAMLHelper.GetThisURL(this));
             string cdoc = SAMLHelper.Compress(AuthnReq.ToString());
-            string URL = "https://" + b2cloginurl + "/te/" + Tenant + ".onmicrosoft.com/" + Policy + "/samlp/sso/login?SAMLRequest=" + System.Web.HttpUtility.UrlEncode(cdoc);
+            string URL = "https://" + b2cloginurl + "/te/" + Tenant + "/" + Policy + "/samlp/sso/login?SAMLRequest=" + System.Web.HttpUtility.UrlEncode(cdoc);
        
             return Redirect(URL);
   
