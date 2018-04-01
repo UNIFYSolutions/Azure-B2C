@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using SAMLTEST.SAMLObjects;
 using System;
 
 namespace SAMLTEST.Pages
@@ -13,10 +14,7 @@ namespace SAMLTEST.Pages
 
         public void OnGet(string showpage="false")
         {
-            ShowView = showpage.Equals("true");
-
-            string httpors = HttpContext.Request.IsHttps ? "https://" : "http://";
-            ServerName = httpors + HttpContext.Request.Host.Value;
+            ServerName = SAMLHelper.GetThisURL(this);
         }
 
     }
