@@ -89,12 +89,23 @@
 						<Item Key="PartnerEntity">%THISWEBAPP%/Metadata</Item>
 						<Item Key="WantsSignedAssertions">false</Item>
 						<Item Key="ResponsesSigned">false</Item>
+          	<!-- Added for IDP Initated SSO From the Extrnal IDP SIde -->
+						<Item Key="IdpInitiatedProfileEnabled">true</Item>
 					</Metadata>
 					<CryptographicKeys>
 						<Key Id="SamlMessageSigning" StorageReferenceId="B2C_1A_SAMLCERT" />
 						<Key Id="SamlAssertionSigning" StorageReferenceId="B2C_1A_SAMLCERT" />
 						<Key Id="SamlAssertionDecryption" StorageReferenceId="B2C_1A_SAMLCERT" />
 					</CryptographicKeys>
+          <!-- Input Claims used fro IDP Initiated SSO -->
+          <InputClaims>
+						<InputClaim ClaimTypeReferenceId="Title" />
+						<InputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="FirstName" />
+						<InputClaim ClaimTypeReferenceId="surname" PartnerClaimType="LastName" />
+						<InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="UID" />
+						<InputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="TESTIDP" />
+						<InputClaim ClaimTypeReferenceId="objectId" />
+					</InputClaims>
 					<OutputClaims>
 						<OutputClaim ClaimTypeReferenceId="Title" />
 						<OutputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="FirstName" />
@@ -132,17 +143,13 @@
 		-->
 		<UserJourney Id="TESTIDPJourney">
 			<OrchestrationSteps>
-				<OrchestrationStep Order="1" Type="ClaimsProviderSelection" ContentDefinitionReferenceId="api.signuporsignin">
-					<ClaimsProviderSelections>
-						<ClaimsProviderSelection TargetClaimsExchangeId="TESTIDPExchange" />
-					</ClaimsProviderSelections>
-				</OrchestrationStep>
-				<OrchestrationStep Order="2" Type="ClaimsExchange">
+				<!-- Claims Exchange Must be the first Orchistration Step for IDP Iniated SSO -->
+				<OrchestrationStep Order="1" Type="ClaimsExchange">
 					<ClaimsExchanges UserIdentity="false">
 						<ClaimsExchange Id="TESTIDPExchange" TechnicalProfileReferenceId="TESTIDP" />
 					</ClaimsExchanges>
 				</OrchestrationStep>
-				<OrchestrationStep Order="3" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="SAMLAssert" />
+				<OrchestrationStep Order="2" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="SAMLAssert" />
 			</OrchestrationSteps>
 		</UserJourney>
 	</UserJourneys>
@@ -158,6 +165,7 @@
 			<OutputTokenFormat>SAML2</OutputTokenFormat>
 			<Metadata>
 				<Item Key="PartnerEntity">%THISWEBAPP%/Metadata</Item>
+        <!-- Added for IDP Initated SSO From the B2C Side -->
 				<Item Key="IdpInitiatedProfileEnabled">true</Item>
 			</Metadata>
 			<OutputClaims>

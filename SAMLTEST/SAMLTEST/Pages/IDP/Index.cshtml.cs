@@ -40,7 +40,7 @@ namespace SAMLTEST.Pages.IDP
             Tenant = Tenant.ToLower().Contains("onmicrosoft.com") ? Tenant : Tenant + ".onmicrosoft.com";
 
 
-            string ACS = "https://" + b2cloginurl + "/te/" + Tenant + "/" + Policy + "/samlp/sso/assertionconsumer" ;
+            string ACS = "https://" + b2cloginurl + "/te/" + Tenant + "/" + Policy + "/samlp/sso/assertionconsumer";
 
             SAMLResponse Resp = new SAMLResponse(ACS, "", SAMLHelper.GetThisURL(this), _configuration);
             string SAMLResponse = Convert.ToBase64String(Encoding.UTF8.GetBytes(Resp.ToString()));
