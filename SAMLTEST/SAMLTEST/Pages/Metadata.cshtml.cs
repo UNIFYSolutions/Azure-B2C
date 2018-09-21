@@ -15,6 +15,10 @@ namespace SAMLTEST.Pages
         public void OnGet(string showpage="false")
         {
             ServerName = SAMLHelper.GetThisURL(this);
+            if (showpage != "false")
+            {
+                ShowView = true;
+            }
         }
 
     }

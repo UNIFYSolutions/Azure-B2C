@@ -7,6 +7,7 @@
     <PackageTags>SAML</PackageTags>
     <RepositoryUrl>https://github.com/UNIFYSolutions/AzureADB2C</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
+    <UserSecretsId>39ec726f-b878-4431-bb2a-c02b66a55583</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="B2CPolicyTemplate.xml" />
